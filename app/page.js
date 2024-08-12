@@ -1,113 +1,204 @@
-import Image from "next/image";
+"use client";
+
+import Image from 'next/image';
+import { useState } from 'react';
 
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+  const [messages, setMessages] = useState([{
+    role: "assistant",
+    content: "Hello! I'm a virtual therapist. How can I help you today?",
+  }])
+
+  /* Message state for whatever ,message you'll be typing in the chat box: */
+  const [message, setMessage] = useState("");
+
+  /* Send current messages array to the backend and return the response: */
+  const sendMessage = async () => {
+    setMessage('');
+    setMessages((messages) => [
+      ...messages,
+      {
+        role: "user",
+        content: message,
+      },
+      {
+        role: "assistant",
+        content: "",
+      }
+    ]);
+  
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify([...messages,
+          {
+            role: 'user',
+            content: message,
+          }
+        ]),
+      });
+  
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+  
+      let result = '';
+      let done = false;
+  
+      while (!done) {
+        const { value, done: readerDone } = await reader.read();
+        done = readerDone;
+  
+        const text = decoder.decode(value || new Uint8Array, { stream: !done });
+        result += text;
+  
+        setMessages((messages) => {
+          let lastMessage = messages[messages.length - 1];
+          let otherMessages = messages.slice(0, messages.length - 1);
+          return [
+            ...otherMessages,
+            {
+              ...lastMessage,
+              content: lastMessage.content + text,
+            },
+          ];
+        });
+      }
+    } catch (error) {
+      console.error("Error in Chat:", error);
+      setMessages((messages) => [
+        ...messages,
+        {
+          role: "assistant",
+          content: "Sorry, something went wrong.",
+        },
+      ]);
+    }
+  };
+  
+
+  // ORIGINAL:
+  // const sendMessage = async () => {
+  //   setMessage('')
+  //   setMessages((messages) => [
+  //     ...messages,
+  //     {
+  //       role: "user",
+  //       content: message,
+  //     },
+  //     {
+  //       role: "assistant",
+  //       content: "",
+  //     }
+  //   ])
+
+  //   const response = await fetch('/api/messages', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify([...messages,
+  //       {
+  //         role: 'user',
+  //         content: message,
+  //       }
+  //     ]).then(async (res) => {
+  //       const reader = res.body.getReader()
+  //       const decoder = new TextDecoder()
+
+  //       let result = ''
+  //       return reader.read().then(function processText({done, value}){
+  //         if (done){
+  //           return result
+  //         }
+
+  //         const text = decoder.decode(value || new Uint8Array, {stream: true})
+  //         setMessages((messages) => {
+  //           let lastMessage = messages[messages.length - 1]
+  //           let otherMessages = messages.slice(0, messages.length - 1)
+  //           return[
+  //             ...otherMessages,
+  //             {
+  //               ...lastMessage,
+  //               content: lastMessage.content + text,
+  //             },
+  //           ]
+  //         })
+  //         return reader.read().then(processText)
+  //       })
+  //     })
+
+  //   })
+      
+  // }
+
+  
+
+  return(
+    <div className='w-full flex flex-col justify-center align-middle'>
+      {/* Text UI: */}
+      <div className='flex flex-col w-[600px] h-[700px] border-2 border-solid
+                    border-black p-2 space-y-3'>
+        <div className='flex flex-col space-y-2 space-x-2 flex-grow overflow-auto
+                        max-h-full'>
+          {/* DIsplay the messages: */}
+          {
+            messages.map((message, index) => (
+              <div key={index}
+                   className={`flex flex-col space-y-2
+                              ${message.role === "assistant" ? "items-start" : "items-end"}`}>
+                <div 
+                  className={`p-2 text-white rounded-lg
+                            ${message.role === "assistant" ? "bg-blue-600" : "bg-green-600"}`}>
+                  {message.content}
+                </div>
+              </div>
+            ))
+          }
         </div>
+
+        {/* Input UI: */}
+        <div className='flex flex-row space-x-2 space-y-2'>
+          <input type='text' 
+                 aria-label='message'
+                 placeholder='message...'
+                 className='flex-grow p-2 border-2 border-solid border-black rounded-lg'
+                 value={message}
+                 onChange={(e) => setMessage(e.target.value)}
+                 onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      sendMessage();
+                    }
+                 }}
+                //  onKeyDown={(e) => {
+                //    if (e.key === "Enter") {
+                //      setMessages([...messages, {
+                //        role: "user",
+                //        content: message,
+                //      }]);
+                //      setMessage("");
+                //    }
+                //  }}
+          />
+          <button className='p-2 bg-blue-600 text-white rounded-lg'
+                  onClick={sendMessage}
+                  // onClick={() => {
+                  //   setMessages([...messages, {
+                  //     role: "user",
+                  //     content: message,
+                  //   }]);
+                  //   setMessage("");
+                  // }}
+          >
+            Send
+          </button>
+        </div>
+
+
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+    </div>
+  )
+  
 }
