@@ -138,9 +138,9 @@ export default function Home() {
 
   return(
     <div className='w-full flex flex-col justify-center align-middle'>
-      {/* Text UI: */}
-      <div className='flex flex-col w-[600px] h-[700px] border-2 border-solid
-                    border-black p-2 space-y-3'>
+      {/* Chat Area UI: */}
+      <div className='flex min-h-screen flex-col items-center p-12'>
+        {/* Messages */}
         <div className='flex flex-col space-y-2 space-x-2 flex-grow overflow-auto
                         max-h-full'>
           {/* DIsplay the messages: */}
@@ -160,7 +160,7 @@ export default function Home() {
         </div>
 
         {/* Input UI: */}
-        <div className='flex flex-row space-x-2 space-y-2'>
+        <div className='w-full flex flex-row items-center'>
           <input type='text' 
                  aria-label='message'
                  placeholder='message...'
