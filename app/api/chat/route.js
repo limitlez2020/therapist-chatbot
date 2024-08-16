@@ -2,31 +2,42 @@ import { NextResponse } from "next/server";
 import { GoogleGenerativeAI} from '@google/generative-ai';
 
 
-export async function POST(req, res) {
-
-  const systemPrompt = `You are a compassionate and empathetic virtual therapist. 
-                        Your goal is to listen to the user's problems, ask insightful
-                        questions, and provide helpful advice without being judgmental.
-                        Be supportive and focus on the user's emotional well-being.`;
+export async function POST(req) {
 
   const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  const model = genAI.getGenerativeModel({ 
+    model: "gemini-1.5-flash",
+    systemInstruction: `You are a compassionate and empathetic virtual therapist. 
+                        Your goal is to listen to the user's problems, ask insightful
+                        questions, and provide helpful advice without being judgmental.
+                        Be supportive and focus on the user's emotional well-being.`
 
-  console.log("Gemini API Key:", process.env.GEMINI_API_KEY);
+   });
 
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-    // const MODEL_NAME = "gemini-pro";
-
+    /* 'data' is the basically the messages array from the page.js
+     * file. This array contains the entire chat history:
+     * it contains objects, and each object has a role and content
+     * property. The role is either 'user' or 'assistant', and the
+     * content is the text that the user or the assistant has typed.
+     */
     const data = await req.json();
-    console.log("Parsed data:", data); // Add this for debugging
 
-    const result = await model.generateContent(systemPrompt);
-    const response = await result.response;
-    const code = await response.text();
+    /* Construct the conversation history: */
+    const conversationHistory = data.map(message => {
+      return `${message.content}`;
+    }).join("\n\n");
 
-    return NextResponse.json({code: code})
+    /* Combine the system instruction with the conversation history */
+    const fullPrompt = `${model.systemInstruction}\n\n${conversationHistory}\n`;
 
+    /* Send user's prompt and then get assistant's response: */
+    const streamingResponse = await model.generateContentStream(fullPrompt);
+    const response = await streamingResponse.response;
+    const text = response.text();
 
+    /* Return the assistant's response: */
+    return new Response(text);
 
   } catch (error) {
     console.error("Error in API Call:", error.message);

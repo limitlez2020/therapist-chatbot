@@ -6,7 +6,7 @@ import { useState } from 'react';
 export default function Home() {
   const [messages, setMessages] = useState([{
     role: "assistant",
-    content: "Hello! I'm a virtual therapist. How can I help you today?",
+    content: "Hey there! How are you feeling today?",
   }])
 
   /* Message state for whatever ,message you'll be typing in the chat box: */
