@@ -29,15 +29,16 @@ export async function POST(req) {
     }).join("\n\n");
 
     /* Combine the system instruction with the conversation history */
-    const fullPrompt = `${model.systemInstruction}\n\n${conversationHistory}\n`;
+    const prompt = `${model.systemInstruction}\n\nHere's what has been discussed so far:${conversationHistory}\n`;
 
     /* Send user's prompt and then get assistant's response: */
-    const streamingResponse = await model.generateContentStream(fullPrompt);
-    const response = await streamingResponse.response;
+    const result = await model.generateContentStream(prompt);
+    const response = await result.response;
     const text = response.text();
 
     /* Return the assistant's response: */
     return new Response(text);
+
 
   } catch (error) {
     console.error("Error in API Call:", error.message);
