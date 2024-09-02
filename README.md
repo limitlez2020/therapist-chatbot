@@ -30,9 +30,7 @@ The AI Therapist is designed to simulate a real-life therapy session, offering u
 Link: _coming soon_
 
 - **Engage in Conversations**: Users can start a conversation with the AI Therapist, who will respond with thoughtful questions and advice, simulating a real therapy session.
-  
 - **Natural Conversation Flow**: The message streaming functionality ensures that the conversation feels smooth and natural, with responses appearing in real-time.
-
 - **Ongoing Improvements**: The AI Therapist is continuously being enhanced based on user feedback, making the experience more personalized and effective over time.
 
 
