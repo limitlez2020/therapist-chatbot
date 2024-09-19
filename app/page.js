@@ -136,13 +136,79 @@ export default function Home() {
 
   
 
+  // return(
+  //   <div className='w-full flex flex-col justify-center align-middle'>
+  //     {/* Chat Area UI: */}
+  //     <div className='flex min-h-screen flex-col items-center p-12'>
+  //       {/* Messages */}
+  //       <div className='flex flex-col space-y-2 space-x-2 flex-grow overflow-auto
+  //                       max-h-full'>
+  //         {/* DIsplay the messages: */}
+  //         {
+  //           messages.map((message, index) => (
+  //             <div key={index}
+  //                  className={`flex flex-col space-y-2
+  //                             ${message.role === "assistant" ? "items-start" : "items-end"}`}>
+  //               <div 
+  //                 className={`p-2 text-white rounded-lg
+  //                           ${message.role === "assistant" ? "bg-blue-600" : "bg-green-600"}`}>
+  //                 {message.content}
+  //               </div>
+  //             </div>
+  //           ))
+  //         }
+  //       </div>
+
+  //       {/* Input UI: */}
+  //       <div className='w-full flex flex-row items-center'>
+  //         <input type='text' 
+  //                aria-label='message'
+  //                placeholder='message...'
+  //                className='flex-grow p-2 border-2 border-solid border-black rounded-lg'
+  //                value={message}
+  //                onChange={(e) => setMessage(e.target.value)}
+  //                onKeyDown={(e) => {
+  //                   if (e.key === "Enter") {
+  //                     sendMessage();
+  //                   }
+  //                }}
+  //               //  onKeyDown={(e) => {
+  //               //    if (e.key === "Enter") {
+  //               //      setMessages([...messages, {
+  //               //        role: "user",
+  //               //        content: message,
+  //               //      }]);
+  //               //      setMessage("");
+  //               //    }
+  //               //  }}
+  //         />
+  //         <button className='p-2 bg-blue-600 text-white rounded-lg'
+  //                 onClick={sendMessage}
+  //                 // onClick={() => {
+  //                 //   setMessages([...messages, {
+  //                 //     role: "user",
+  //                 //     content: message,
+  //                 //   }]);
+  //                 //   setMessage("");
+  //                 // }}
+  //         >
+  //           Send
+  //         </button>
+  //       </div>
+
+
+  //     </div>
+  //   </div>
+  // )
+
   return(
-    <div className='w-full flex flex-col justify-center align-middle'>
+    <div className={`${prompt.className} w-full flex flex-col justify-center bg-[#1E1E1E]
+                   align-middle border-black/20 border-2 rounded-2xl shadow-inner`}>
       {/* Chat Area UI: */}
       <div className='flex min-h-screen flex-col items-center p-12'>
         {/* Messages */}
-        <div className='flex flex-col space-y-2 space-x-2 flex-grow overflow-auto
-                        max-h-full'>
+        <div className='flex flex-col space-y-2 space-x-2 flex-grow
+                        max-h-full mb-16'>
           {/* DIsplay the messages: */}
           {
             messages.map((message, index) => (
@@ -150,8 +216,8 @@ export default function Home() {
                    className={`flex flex-col space-y-2
                               ${message.role === "assistant" ? "items-start" : "items-end"}`}>
                 <div 
-                  className={`p-2 text-white rounded-lg
-                            ${message.role === "assistant" ? "bg-blue-600" : "bg-green-600"}`}>
+                  className={`p-2 rounded-lg
+                            ${message.role === "assistant" ? "bg-[#3C3C3C] text-white" : "bg-white text-black"}`}>
                   {message.content}
                 </div>
               </div>
@@ -160,11 +226,12 @@ export default function Home() {
         </div>
 
         {/* Input UI: */}
-        <div className='w-full flex flex-row items-center'>
+        <div className={`${monstserrat.className} w-full flex flex-row items-center justify-center gap-4`}>
           <input type='text' 
                  aria-label='message'
                  placeholder='message...'
-                 className='flex-grow p-2 border-2 border-solid border-black rounded-lg'
+                 className='flex-grow p-2 border-2 border-solid bg-white text-sm
+                          border-black text-black font-semibold rounded-lg'
                  value={message}
                  onChange={(e) => setMessage(e.target.value)}
                  onKeyDown={(e) => {
@@ -172,33 +239,16 @@ export default function Home() {
                       sendMessage();
                     }
                  }}
-                //  onKeyDown={(e) => {
-                //    if (e.key === "Enter") {
-                //      setMessages([...messages, {
-                //        role: "user",
-                //        content: message,
-                //      }]);
-                //      setMessage("");
-                //    }
-                //  }}
           />
-          <button className='p-2 bg-blue-600 text-white rounded-lg'
+          <button className='p-2 bg-[#fede65] text-black rounded-lg border-black
+                             border-2 font-bold text-sm'
                   onClick={sendMessage}
-                  // onClick={() => {
-                  //   setMessages([...messages, {
-                  //     role: "user",
-                  //     content: message,
-                  //   }]);
-                  //   setMessage("");
-                  // }}
           >
-            Send
+            <PaperAirplaneIcon className="size-5"/>
           </button>
         </div>
-
-
       </div>
     </div>
-  )
+  );
   
 }
