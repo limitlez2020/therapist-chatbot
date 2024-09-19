@@ -211,7 +211,7 @@ export default function Home() {
   // )
 
   return(
-    <div className={`${prompt.className} w-full flex flex-col justify-center bg-[#1E1E1E]
+    <div className={`${prompt.className} w-full flex flex-col justify-center bg-[#ceccd2]
                    align-middle border-black/20 border-2 shadow-inner`}>
       {/* Chat Area UI: */}
       <div className='flex min-h-screen flex-col items-center p-12'>
