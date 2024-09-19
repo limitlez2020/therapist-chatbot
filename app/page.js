@@ -2,6 +2,15 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import { Montserrat } from 'next/font/google';
+import { Prompt } from 'next/font/google';
+import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
+
+const monstserrat = Montserrat({ subsets: ['latin'] });
+const prompt = Prompt({ 
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
+});
 
 export default function Home() {
   const [messages, setMessages] = useState([{
@@ -203,7 +212,7 @@ export default function Home() {
 
   return(
     <div className={`${prompt.className} w-full flex flex-col justify-center bg-[#1E1E1E]
-                   align-middle border-black/20 border-2 rounded-2xl shadow-inner`}>
+                   align-middle border-black/20 border-2 shadow-inner`}>
       {/* Chat Area UI: */}
       <div className='flex min-h-screen flex-col items-center p-12'>
         {/* Messages */}
