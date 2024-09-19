@@ -1,37 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AI Therapist
 
-## Getting Started
+A virtual therapist web application that intelligently responds to users using the Gemini 1.5 flash model. The AI Therapist engages in conversations just like a real-life therapist, asking thoughtful questions and actively listening to users. The application is built with React and Next.js, with ongoing improvements based on user feedback.
 
-First, run the development server:
+## Project Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+The AI Therapist is designed to simulate a real-life therapy session, offering users an opportunity to interact with a virtual therapist that provides thoughtful responses and guidance. The core functionality includes message streaming to ensure a smooth and natural conversation flow. The project is currently in progress, with continuous enhancements being made to improve user experience.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- **Intelligent Responses**:
+  - The virtual therapist responds intelligently, mimicking the conversational style of a real therapist.
+  
+- **Message Streaming**:
+  - Implemented message streaming for a more natural and seamless conversation experience.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- **User Feedback Integration**:
+  - The application is continuously being improved based on feedback from users to better meet their needs.
 
-## Learn More
+## Technologies Used
 
-To learn more about Next.js, take a look at the following resources:
+- **React**: For building the user interface.
+- **Next.js**: For server-side rendering and application framework.
+- **Gemini API**: Integrated for AI-driven conversation and responses.
+- **Tailwind CSS**: For styling and designing a responsive and modern UI.
+- **Vercel**: For deploying the application with ease.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Link: _coming soon_
 
-## Deploy on Vercel
+- **Engage in Conversations**: Users can start a conversation with the AI Therapist, who will respond with thoughtful questions and advice, simulating a real therapy session.
+- **Natural Conversation Flow**: The message streaming functionality ensures that the conversation feels smooth and natural, with responses appearing in real-time.
+- **Ongoing Improvements**: The AI Therapist is continuously being enhanced based on user feedback, making the experience more personalized and effective over time.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-"# therapist-chatbot" 
+## Authors
+
+- David Fortune Akinremi (moi 🙈)
