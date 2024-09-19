@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { Montserrat } from 'next/font/google';
 import { Prompt } from 'next/font/google';
-import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
+// import { PaperAirplaneIcon } from '@heroicons/react/24/solid';
 
 const monstserrat = Montserrat({ subsets: ['latin'] });
 const prompt = Prompt({ 
@@ -253,7 +253,8 @@ export default function Home() {
                              border-2 font-bold text-sm'
                   onClick={sendMessage}
           >
-            <PaperAirplaneIcon className="size-5"/>
+            {/* <PaperAirplaneIcon className="size-5"/> */}
+            Send
           </button>
         </div>
       </div>
