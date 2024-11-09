@@ -15,7 +15,7 @@ const prompt = Prompt({
 export default function Home() {
   const [messages, setMessages] = useState([{
     role: "assistant",
-    content: "Hey there! How are you feeling today?",
+    content: "Hey there.",
   }])
 
   /* Message state for whatever ,message you'll be typing in the chat box: */
