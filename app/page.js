@@ -91,7 +91,7 @@ export default function Home() {
   };
   
 
-  
+
 
   return(
     <div className={`${prompt.className} w-full flex flex-col justify-center bg-[#ceccd2]
@@ -109,9 +109,9 @@ export default function Home() {
                               ${message.role === "assistant" ? "items-start" : "items-end"}`}>
                 <div 
                   className={`p-2 rounded-lg
-                            ${message.role === "assistant" ? "bg-[#3C3C3C] text-white" : "bg-white text-black"}`}>
-                  {message.content}
-                </div>
+                            ${message.role === "assistant" ? "bg-[#3C3C3C] text-white" : "bg-white text-black"}`}
+                  dangerouslySetInnerHTML={{ __html: md.render(message.content) }}
+                />
               </div>
             ))
           }
