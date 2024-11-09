@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Montserrat } from 'next/font/google';
 import { Prompt } from 'next/font/google';
 import MarkdownIt from 'markdown-it';
+import MarkdownItLinkAttributes from "markdown-it-link-attributes"
 
 const monstserrat = Montserrat({ subsets: ['latin'] });
 const prompt = Prompt({ 
@@ -21,8 +22,18 @@ export default function Home() {
   /* Message state for whatever ,message you'll be typing in the chat box: */
   const [message, setMessage] = useState("");
 
-  /* Create a markdown instance */
-  const md = new MarkdownIt();
+  /* Create a markdown instance: */
+  const md = new MarkdownIt({
+    html: true,
+    linkify: true
+  })
+    .use(MarkdownItLinkAttributes, {
+      pattern: /^https?:\/\//,
+      attrs: {
+        target: '_blank',
+        rel: 'noopener'
+      }
+    });
 
   /* Send current messages array to the backend and return the response: */
   const sendMessage = async () => {
@@ -107,6 +118,7 @@ export default function Home() {
               <div key={index}
                    className={`flex flex-col space-y-2
                               ${message.role === "assistant" ? "items-start" : "items-end"}`}>
+                {/* We add markdown so the response from the AI is easier to read */}
                 <div 
                   className={`p-2 rounded-lg
                             ${message.role === "assistant" ? "bg-[#3C3C3C] text-white" : "bg-white text-black"}`}
