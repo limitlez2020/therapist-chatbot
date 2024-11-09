@@ -22,6 +22,7 @@ export default function Home() {
   /* Message state for whatever ,message you'll be typing in the chat box: */
   const [message, setMessage] = useState("");
 
+
   /* Create a markdown instance: */
   const md = new MarkdownIt({
     html: true,
@@ -31,9 +32,11 @@ export default function Home() {
       pattern: /^https?:\/\//,
       attrs: {
         target: '_blank',
-        rel: 'noopener'
+        rel: 'noopener noreferrer',
+        class: 'text-blue-500 underline'
       }
     });
+
 
   /* Send current messages array to the backend and return the response: */
   const sendMessage = async () => {
