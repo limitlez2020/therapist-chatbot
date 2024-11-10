@@ -67,31 +67,61 @@ export default function Home() {
         ]),
       });
   
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder();
+      // const reader = response.body.getReader();
+      // const decoder = new TextDecoder();
   
-      let result = '';
-      let done = false;
+      // let result = '';
+      // let done = false;
   
-      while (!done) {
-        const { value, done: readerDone } = await reader.read();
-        done = readerDone;
+      // while (!done) {
+      //   const { value, done: readerDone } = await reader.read();
+      //   done = readerDone;
   
-        const text = decoder.decode(value || new Uint8Array, { stream: !done });
-        result += text;
+      //   const text = decoder.decode(value || new Uint8Array, { stream: !done });
+      //   result += text;
   
-        setMessages((messages) => {
-          let lastMessage = messages[messages.length - 1];
-          let otherMessages = messages.slice(0, messages.length - 1);
-          return [
-            ...otherMessages,
-            {
-              ...lastMessage,
-              content: lastMessage.content + text,
-            },
-          ];
-        });
-      }
+      //   setMessages((messages) => {
+      //     let lastMessage = messages[messages.length - 1];
+      //     let otherMessages = messages.slice(0, messages.length - 1);
+      //     return [
+      //       ...otherMessages,
+      //       {
+      //         ...lastMessage,
+      //         content: lastMessage.content + text,
+      //       },
+      //     ];
+      //   });
+      // }
+
+
+      /* Simulate the typing effect of the chatbot */
+      const text = await response.text();
+
+      const typingDelay = 0.1; // Adjust the typing delay as needed
+  
+      const displayCharacter = (index) => {
+        setTimeout(() => {
+          setMessages((prevMessages) => {
+            const lastMessage = prevMessages[prevMessages.length - 1];
+            return [
+              ...prevMessages.slice(0, -1),
+              {
+                ...lastMessage,
+                content: lastMessage.content + text[index],
+              },
+            ];
+          });
+  
+          if (index < text.length - 1) {
+            displayCharacter(index + 1);
+          }
+        }, typingDelay * index);
+      };
+  
+      displayCharacter(0);
+      /* END SIMULATION */
+
+
     } catch (error) {
       console.error("Error in Chat:", error);
       setMessages((messages) => [
