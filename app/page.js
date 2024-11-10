@@ -121,55 +121,106 @@ export default function Home() {
 
 
   return(
-    <div className={`${geologica.className} w-full flex flex-col justify-center bg-[#212121]
-                   align-middle border-black/20 border-2 shadow-inner`}>
-      {/* Chat Container: */}
-      <div className='flex min-h-screen flex-col items-center p-12'>
+    // <div className={`${geologica.className} w-full flex flex-col justify-center bg-[#212121]
+    //                align-middle border-black/20 border-2 shadow-inner`}>
+    //   {/* Chat Container: */}
+    //   <div className='flex min-h-screen flex-col items-center p-12'>
+    //     {/* Messages */}
+    //     <div className='flex flex-col space-y-2 space-x-2 flex-grow
+    //                     max-h-full mb-16'>
+    //       {/* DIsplay the messages: */}
+    //       {
+    //         messages.map((message, index) => (
+    //           <div key={index}
+    //                className={`flex flex-col space-y-2
+    //                           ${message.role === "assistant" ? "items-start" : "items-end"}`}>
+    //             {/* We add markdown so the response from the AI is easier to read */}
+    //             <div 
+    //               className={`p-2 rounded-lg
+    //                         ${message.role === "assistant" ? "bg-[#3C3C3C] text-white" : "bg-white text-black"}`}
+    //               dangerouslySetInnerHTML={{ __html: md.render(message.content) }}
+    //             />
+    //           </div>
+    //         ))
+    //       }
+    //     </div>
+
+    //     {/* Input UI: */}
+    //     <div className={`${monstserrat.className} w-full flex flex-row items-center justify-center gap-4`}>
+    //       <input type='text' 
+    //              aria-label='message'
+    //              placeholder='message...'
+    //              className='flex-grow p-2 border-2 border-solid bg-white text-sm
+    //                       border-black text-black font-semibold rounded-lg'
+    //              value={message}
+    //              onChange={(e) => setMessage(e.target.value)}
+    //              onKeyDown={(e) => {
+    //                 if (e.key === "Enter") {
+    //                   sendMessage();
+    //                 }
+    //              }}
+    //       />
+    //       <button className='p-2 bg-[#fede65] text-black rounded-lg border-black
+    //                          border-2 font-bold text-sm'
+    //               onClick={sendMessage}
+    //       >
+    //         {/* <PaperAirplaneIcon className="size-5"/> */}
+    //         Send
+    //       </button>
+    //     </div>
+    //   </div>
+    // </div>
+
+    <div className={`${geologica.className} w-full flex flex-col justify-center bg-[#121212] align-middle border-black/20 border-2 shadow-inner`}>
+      {/* Chat Container */}
+      <div className="flex min-h-screen flex-col items-center p-12">
         {/* Messages */}
-        <div className='flex flex-col space-y-2 space-x-2 flex-grow
-                        max-h-full mb-16'>
-          {/* DIsplay the messages: */}
-          {
-            messages.map((message, index) => (
-              <div key={index}
-                   className={`flex flex-col space-y-2
-                              ${message.role === "assistant" ? "items-start" : "items-end"}`}>
-                {/* We add markdown so the response from the AI is easier to read */}
-                <div 
-                  className={`p-2 rounded-lg
-                            ${message.role === "assistant" ? "bg-[#3C3C3C] text-white" : "bg-white text-black"}`}
-                  dangerouslySetInnerHTML={{ __html: md.render(message.content) }}
-                />
-              </div>
-            ))
-          }
+        <div className="flex flex-col space-y-2 space-x-2 flex-grow max-h-full mb-16">
+          {/* Display Messages */}
+          {messages.map((message, index) => (
+            <div
+              key={index}
+              className={`flex flex-col space-y-2 ${
+                message.role === "assistant" ? "items-start" : "items-end"
+              }`}
+            >
+              <div
+                className={`p-2 rounded-lg ${
+                  message.role === "assistant"
+                    ? "bg-[#3C3C3C] text-white"
+                    : "bg-[#1F1F1F] text-white"
+                }`}
+                dangerouslySetInnerHTML={{ __html: md.render(message.content) }}
+              />
+            </div>
+          ))}
         </div>
 
-        {/* Input UI: */}
+        {/* Input UI */}
         <div className={`${monstserrat.className} w-full flex flex-row items-center justify-center gap-4`}>
-          <input type='text' 
-                 aria-label='message'
-                 placeholder='message...'
-                 className='flex-grow p-2 border-2 border-solid bg-white text-sm
-                          border-black text-black font-semibold rounded-lg'
-                 value={message}
-                 onChange={(e) => setMessage(e.target.value)}
-                 onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      sendMessage();
-                    }
-                 }}
+          <input
+            type="text"
+            aria-label="message"
+            placeholder="message..."
+            className="flex-grow p-2 border-2 border-solid bg-[#1F1F1F] text-white text-sm border-[#3C3C3C] rounded-lg"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                sendMessage();
+              }
+            }}
           />
-          <button className='p-2 bg-[#fede65] text-black rounded-lg border-black
-                             border-2 font-bold text-sm'
-                  onClick={sendMessage}
+          <button
+            className="p-2 bg-[#fede65] text-black rounded-lg border-black border-2 font-bold text-sm"
+            onClick={sendMessage}
           >
-            {/* <PaperAirplaneIcon className="size-5"/> */}
             Send
           </button>
         </div>
       </div>
     </div>
+
   );
-  
+      
 }
