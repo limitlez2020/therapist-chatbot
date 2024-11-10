@@ -171,9 +171,9 @@ export default function Home() {
     //   </div>
     // </div>
 
-    <div className={`${geologica.className} h-full w-full flex flex-col justify-center bg-[#121212] align-middle`}>
+    <div className={`${geologica.className} h-full w-full flex justify-center bg-[#121212] align-middle`}>
       {/* Chat Container */}
-      <div className="flex min-h-screen flex-col items-center p-12">
+      <div className="flex flex-col min-h-screen w-full max-w-4xl p-12">
         {/* Messages */}
         <div className="flex flex-col space-y-2 space-x-2 flex-grow max-h-full mb-16">
           {/* Display Messages */}
