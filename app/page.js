@@ -208,9 +208,15 @@ export default function Home() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter" && !e.shiftKey) {
+              /* Set a threshold for desktop, so if the viewport goes below that, 
+               * pressing enter will not send the message, the user will have to
+               * explicitly press the send button -- For responsiveness on phones 
+              */
+              const isDesktop = window.innerWidth >= 768;
+              if (e.key === "Enter" && !e.shiftKey && isDesktop) {
                 e.preventDefault();
                 sendMessage();
+                /* Reset the height of the textarea to default */
                 e.target.style.height = "auto";
               }
             }}
