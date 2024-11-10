@@ -219,7 +219,7 @@ export default function Home() {
             }}
           />
           <button
-            className="p-2 font-bold text-sm"
+            className="p-2 font-bold text-sm mr-1"
             onClick={sendMessage}
           >
             <PaperAirplaneIcon className='size-5 text-white'/>
