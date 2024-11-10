@@ -27,7 +27,7 @@ The AI Therapist is designed to simulate a real-life therapy session, offering u
 
 ## Usage
 
-Link: _coming soon_
+Link: https://therapist-chatbot.vercel.app/
 
 - **Engage in Conversations**: Users can start a conversation with the AI Therapist, who will respond with thoughtful questions and advice, simulating a real therapy session.
 - **Natural Conversation Flow**: The message streaming functionality ensures that the conversation feels smooth and natural, with responses appearing in real-time.
