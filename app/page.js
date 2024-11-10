@@ -198,11 +198,11 @@ export default function Home() {
         </div>
 
         {/* Input UI */}
-        <div className={`${monstserrat.className} bg-[#373737] w-full h-grow flex flex-row gap-1 items-center justify-center rounded-2xl`}>
+        <div className={`${monstserrat.className} bg-[#373737] w-full h-grow flex flex-row gap-1 items-center justify-center rounded-3xl`}>
           <textarea
             aria-label="message"
             placeholder="message..."
-            className="flex-grow p-2 focus:outline-none max-h-40 border-none bg-[#373737] text-white text-sm rounded-2xl"
+            className="flex-grow my-3 px-3 focus:outline-none max-h-40 border-none bg-[#373737] text-white text-sm resize-none rounded-3xl"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={(e) => {
@@ -214,6 +214,7 @@ export default function Home() {
             }}
             /* Make the height of the textarea be dynamic: */
             onInput={(e) => {
+              e.target.style.height = "auto";
               e.target.style.height = `${e.target.scrollHeight}px`;
             }}
           />
