@@ -3,15 +3,17 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { Montserrat } from 'next/font/google';
-import { Prompt } from 'next/font/google';
+import { Geologica } from 'next/font/google';
+import { Open_Sans } from 'next/font/google';
 import MarkdownIt from 'markdown-it';
 import MarkdownItLinkAttributes from "markdown-it-link-attributes"
 
 const monstserrat = Montserrat({ subsets: ['latin'] });
-const prompt = Prompt({ 
+const geologica = Geologica({
   subsets: ['latin'],
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
+const openSans = Open_Sans({ subsets: ['latin'] });
 
 export default function Home() {
   const [messages, setMessages] = useState([{
@@ -66,41 +68,19 @@ export default function Home() {
           }
         ]),
       });
-  
-      // const reader = response.body.getReader();
-      // const decoder = new TextDecoder();
-  
-      // let result = '';
-      // let done = false;
-  
-      // while (!done) {
-      //   const { value, done: readerDone } = await reader.read();
-      //   done = readerDone;
-  
-      //   const text = decoder.decode(value || new Uint8Array, { stream: !done });
-      //   result += text;
-  
-      //   setMessages((messages) => {
-      //     let lastMessage = messages[messages.length - 1];
-      //     let otherMessages = messages.slice(0, messages.length - 1);
-      //     return [
-      //       ...otherMessages,
-      //       {
-      //         ...lastMessage,
-      //         content: lastMessage.content + text,
-      //       },
-      //     ];
-      //   });
-      // }
 
 
-      /* Simulate the typing effect of the chatbot */
+      /* STREAM RESPONSE FROM AI API: */
+      /* Await the response and convert it to text */
       const text = await response.text();
 
-      const typingDelay = 0.1; // Adjust the typing delay as needed
+      /* Delay between each character in seconds -- simulate streaming */
+      const typingDelay = 0.1;
   
+      /* Display each character in the response at a given index */
       const displayCharacter = (index) => {
         setTimeout(() => {
+          /* Update the last message in the array with the new character */
           setMessages((prevMessages) => {
             const lastMessage = prevMessages[prevMessages.length - 1];
             return [
@@ -112,15 +92,18 @@ export default function Home() {
             ];
           });
   
+          /* If we haven't reached the end of the chatbot's 
+             response, display the next character */
           if (index < text.length - 1) {
             displayCharacter(index + 1);
           }
+          /* Delay the execution of this function based on the index */
         }, typingDelay * index);
       };
   
+      /* Start displaying the response character by character */
       displayCharacter(0);
-      /* END SIMULATION */
-
+      /* END OF STREAMING */
 
     } catch (error) {
       console.error("Error in Chat:", error);
@@ -138,9 +121,9 @@ export default function Home() {
 
 
   return(
-    <div className={`${prompt.className} w-full flex flex-col justify-center bg-[#ceccd2]
+    <div className={`${geologica.className} w-full flex flex-col justify-center bg-[#212121]
                    align-middle border-black/20 border-2 shadow-inner`}>
-      {/* Chat Area UI: */}
+      {/* Chat Container: */}
       <div className='flex min-h-screen flex-col items-center p-12'>
         {/* Messages */}
         <div className='flex flex-col space-y-2 space-x-2 flex-grow
