@@ -7,6 +7,7 @@ import { Geologica } from 'next/font/google';
 import { Open_Sans } from 'next/font/google';
 import MarkdownIt from 'markdown-it';
 import MarkdownItLinkAttributes from "markdown-it-link-attributes"
+import { PaperAirplaneIcon } from '@heroicons/react/20/solid';
 
 const monstserrat = Montserrat({ subsets: ['latin'] });
 const geologica = Geologica({
@@ -171,7 +172,7 @@ export default function Home() {
     //   </div>
     // </div>
 
-    <div className={`${geologica.className} h-full w-full flex justify-center bg-[#121212] align-middle`}>
+    <div className={`${geologica.className} h-full w-full flex justify-center bg-[#212121] align-middle`}>
       {/* Chat Container */}
       <div className="flex flex-col min-h-screen w-full max-w-4xl p-12">
         {/* Messages */}
@@ -197,25 +198,30 @@ export default function Home() {
         </div>
 
         {/* Input UI */}
-        <div className={`${monstserrat.className} w-full flex flex-row items-center justify-center gap-4`}>
-          <input
-            type="text"
+        <div className={`${monstserrat.className} bg-[#373737] w-full h-grow flex flex-row gap-1 items-center justify-center rounded-2xl`}>
+          <textarea
             aria-label="message"
             placeholder="message..."
-            className="flex-grow p-2 border-2 border-solid bg-[#1F1F1F] text-white text-sm border-[#3C3C3C] rounded-lg"
+            className="flex-grow p-2 focus:outline-none max-h-40 border-none bg-[#373737] text-white text-sm rounded-2xl"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={(e) => {
-              if (e.key === "Enter") {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
                 sendMessage();
+                e.target.style.height = "auto";
               }
+            }}
+            /* Make the height of the textarea be dynamic: */
+            onInput={(e) => {
+              e.target.style.height = `${e.target.scrollHeight}px`;
             }}
           />
           <button
-            className="p-2 bg-[#fede65] text-black rounded-lg border-black border-2 font-bold text-sm"
+            className="p-2 font-bold text-sm"
             onClick={sendMessage}
           >
-            Send
+            <PaperAirplaneIcon className='size-5 text-white'/>
           </button>
         </div>
       </div>
