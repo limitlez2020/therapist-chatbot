@@ -202,7 +202,9 @@ export default function Home() {
           <textarea
             aria-label="message"
             placeholder="message..."
-            className="flex-grow my-2 pt-4 px-4 leading-normal focus:outline-none max-h-40 border-none bg-[#373737] text-white text-sm resize-none rounded-3xl"
+            className="flex-grow my-2 pt-4 pl-4 pr-2 leading-normal focus:outline-none max-h-40
+                       border-none bg-[#373737] text-white text-sm resize-none rounded-3xl
+                       scrollbar-thin scrollbar-thumb-[#676767] scrollbar-track-[#373737]"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={(e) => {
