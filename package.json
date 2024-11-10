@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@google/generative-ai": "^0.16.0",
+    "@heroicons/react": "^2.1.5",
     "ai": "^3.3.8",
     "markdown-it": "^14.1.0",
     "markdown-it-link-attributes": "^4.0.1",
