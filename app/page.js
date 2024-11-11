@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
+import { useRef } from 'react';
 import { Montserrat } from 'next/font/google';
 import { Geologica } from 'next/font/google';
 import { Open_Sans } from 'next/font/google';
@@ -24,6 +25,8 @@ export default function Home() {
 
   /* Message state for whatever ,message you'll be typing in the chat box: */
   const [message, setMessage] = useState("");
+  /* Ref for the textarea for user to type -- so we can reset the size after each send */
+  const textAreaRef = useRef(null);
 
 
   /* Create a markdown instance: */
@@ -116,6 +119,11 @@ export default function Home() {
         },
       ]);
     }
+
+    /* Reset the height of the textarea to default after sending */
+    if (textAreaRef.current) {
+      textAreaRef.current.style.height = "auto";
+    }
   };
   
 
@@ -200,6 +208,7 @@ export default function Home() {
         {/* Input UI */}
         <div className={`${monstserrat.className} bg-[#373737] w-full h-grow flex flex-row gap-1 items-center justify-center rounded-3xl`}>
           <textarea
+            ref={textAreaRef}   /* Attach ref to the textarea */
             aria-label="message"
             placeholder="message..."
             className="flex-grow my-2 pt-4 pl-4 pr-2 leading-normal focus:outline-none max-h-40
@@ -216,13 +225,10 @@ export default function Home() {
               if (e.key === "Enter" && !e.shiftKey && isDesktop) {
                 e.preventDefault();
                 sendMessage();
-                /* Reset the height of the textarea to default */
-                e.target.style.height = "auto";
               }
             }}
             /* Make the height of the textarea be dynamic: */
             onInput={(e) => {
-              e.target.style.height = "auto";
               e.target.style.height = `${e.target.scrollHeight}px`;
             }}
           />
