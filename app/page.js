@@ -79,7 +79,7 @@ export default function Home() {
       const text = await response.text();
 
       /* Delay between each character in seconds -- simulate streaming */
-      const typingDelay = 0.1;
+      const typingDelay = 0.01;
   
       /* Display each character in the response at a given index */
       const displayCharacter = (index) => {
@@ -132,9 +132,15 @@ export default function Home() {
   return(
     <div className={`${geologica.className} h-full w-full flex justify-center bg-[#212121] align-middle`}>
       {/* Chat Container */}
-      <div className="flex flex-col min-h-screen w-full max-w-4xl p-12">
+      <div className="flex flex-col min-h-screen w-full max-w-4xl px-12 pb-8">
+        {/* Header */}
+        <header className="sticky top-0 bg-[#212121] w-full text-[#acacac] p-4 px-5 text-center font-semibold z-10">
+          Virtual Therapy
+        </header>
+
         {/* Messages */}
-        <div className="flex flex-col space-y-2 space-x-2 flex-grow max-h-full mb-16 w-full">
+        {/* <div className="flex flex-col space-y-2 space-x-2 flex-grow max-h-full mb-16 w-full"> */}
+        <div className="flex flex-col flex-grow overflow-y-auto space-y-2 mb-16">
           {/* Display Messages */}
           {messages.map((message, index) => (
             <div
@@ -144,9 +150,9 @@ export default function Home() {
               }`}
             >
               <div
-                className={`p-2 rounded-lg max-w-[75%] overflow-wrap break-words mt-4 ${
+                className={`p-2 rounded-lg max-w-[75%] font-light overflow-hidden overflow-wrap break-words mt-4 ${
                   message.role === "assistant"
-                    ? "bg-[#3C3C3C] text-white"
+                    ? "bg-[#3C3C3C] text-white overflow-x-auto"
                     : "bg-[#1F1F1F] text-white"
                 }`}
                 dangerouslySetInnerHTML={{ __html: md.render(message.content) }}
@@ -156,7 +162,8 @@ export default function Home() {
         </div>
 
         {/* Input UI */}
-        <div className={`${monstserrat.className} bg-[#373737] w-full h-grow flex flex-row gap-1 items-center justify-center rounded-3xl`}>
+        <div className={`${monstserrat.className} bg-[#373737] w-full h-grow flex flex-row gap-1
+                         items-center justify-center rounded-3xl sticky bottom-8`}>
           <textarea
             ref={textAreaRef}   /* Attach ref to the textarea */
             aria-label="message"
