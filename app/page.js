@@ -132,7 +132,7 @@ export default function Home() {
   return(
     <div className={`${geologica.className} h-full w-full flex justify-center bg-[#212121] align-middle`}>
       {/* Chat Container */}
-      <div className="flex flex-col min-h-screen w-full max-w-4xl px-12 pb-8">
+      <div className="flex flex-col min-h-screen w-full max-w-4xl px-12">
         {/* Header */}
         <header className="sticky top-0 bg-[#212121] w-full text-[#acacac] p-4 px-5 text-center font-semibold z-10">
           Virtual Therapy
@@ -162,41 +162,44 @@ export default function Home() {
         </div>
 
         {/* Input UI */}
-        <div className={`${monstserrat.className} bg-[#373737] w-full h-grow flex flex-row gap-1
-                         items-center justify-center rounded-3xl sticky bottom-8`}>
-          <textarea
-            ref={textAreaRef}   /* Attach ref to the textarea */
-            aria-label="message"
-            placeholder="message..."
-            className="flex-grow my-2 pt-4 pl-4 pr-2 leading-normal focus:outline-none max-h-40
-                       border-none bg-[#373737] text-white text-sm resize-none rounded-3xl
-                       scrollbar-thin scrollbar-thumb-[#676767] scrollbar-track-[#373737]"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            onKeyDown={(e) => {
-              /* Set a threshold for desktop, so if the viewport goes below that, 
-               * pressing enter will not send the message, the user will have to
-               * explicitly press the send button -- For responsiveness on phones 
-              */
-              const isDesktop = window.innerWidth >= 768;
-              if (e.key === "Enter" && !e.shiftKey && isDesktop) {
-                e.preventDefault();
-                sendMessage();
-              }
-            }}
-            /* Make the height of the textarea be dynamic: */
-            onInput={(e) => {
-              e.target.style.height = "auto";
-              e.target.style.height = `${e.target.scrollHeight}px`;
-            }}
-          />
-          <button
-            className="p-2 font-bold text-sm mr-1"
-            onClick={sendMessage}
-          >
-            <PaperAirplaneIcon className='size-5 text-white'/>
-          </button>
+        <div className='w-full pb-8 pt-2 sticky bottom-0 bg-[#212121]'>
+          <div className={`${monstserrat.className} bg-[#373737] w-full h-grow flex flex-row gap-1
+                          items-center justify-center rounded-3xl`}>
+            <textarea
+              ref={textAreaRef}   /* Attach ref to the textarea */
+              aria-label="message"
+              placeholder="message..."
+              className="flex-grow my-2 pt-4 pl-4 pr-2 leading-normal focus:outline-none max-h-40
+                        border-none bg-[#373737] text-white text-sm resize-none rounded-3xl
+                        scrollbar-thin scrollbar-thumb-[#676767] scrollbar-track-[#373737]"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={(e) => {
+                /* Set a threshold for desktop, so if the viewport goes below that, 
+                * pressing enter will not send the message, the user will have to
+                * explicitly press the send button -- For responsiveness on phones 
+                */
+                const isDesktop = window.innerWidth >= 768;
+                if (e.key === "Enter" && !e.shiftKey && isDesktop) {
+                  e.preventDefault();
+                  sendMessage();
+                }
+              }}
+              /* Make the height of the textarea be dynamic: */
+              onInput={(e) => {
+                e.target.style.height = "auto";
+                e.target.style.height = `${e.target.scrollHeight}px`;
+              }}
+            />
+            <button
+              className="p-2 font-bold text-sm mr-1"
+              onClick={sendMessage}
+            >
+              <PaperAirplaneIcon className='size-5 text-white'/>
+            </button>
+          </div>
         </div>
+
       </div>
     </div>
 
