@@ -75,8 +75,9 @@ export default function Home() {
 
 
       /* STREAM RESPONSE FROM AI API: */
-      /* Await the response and convert it to text */
-      const text = await response.text();
+      /* Await the response and extract the text from the response object */
+      const data = await response.json();
+      const text = data.text;
 
       /* Delay between each character in seconds -- simulate streaming */
       const typingDelay = 0.01;
